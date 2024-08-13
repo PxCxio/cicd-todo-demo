@@ -1,13 +1,20 @@
 const request = require('supertest');
-const app = require('../index.js'); // Replace with your main app file path
+const app = require('../index');
 
-describe('GET /todos', () => {
-  it('responds with an array of todos', async () => {
+describe('Todo Routes', () => {
+  it('should get all todos', async () => {
     const response = await request(app).get('/todos');
     expect(response.statusCode).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);
   });
-});
 
-// Add more test cases for different functionalities
+  it('should create a new todo', async () => {
+    const newTodo = { text: 'Test Todo' };
+    const response = await request(app).post('/todos').send(newTodo);
+    expect(response.statusCode).toBe(201);
+    expect(response.body).toEqual(newTodo);
+  });
+
+  // Add more test cases for other functionalities
+});
 
